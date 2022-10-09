@@ -1,0 +1,88 @@
+{
+  "name": "add-ruby",
+  "displayName": "Add-Ruby",
+  "description": "ルビ記号を付与する",
+  "icon": "img/icon.png",
+  "publisher": "RR1dge",
+  "version": "1.0.0",
+  "engines": {
+    "vscode": "^1.72.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:add-ruby.place"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [{
+      "command": "add-ruby.place",
+      "title": "ルビ振り",
+      "icon":{
+        "dark": "img/logo_white.svg",
+        "light": "img/logo_black.svg"
+      }
+    }],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "add-ruby.place",
+          "group": "navigation"
+        }
+      ],
+      "editor/context": [
+        {
+          "when": "editorHasSelection",
+          "command": "add-ruby.place",
+          "group": "navigation"
+        }
+      ]
+    },
+    "configuration":[
+      {
+        "title": "ルビ振り",
+        "properties": {
+          "add-ruby.cursorMovement":{
+            "type": "boolean",
+            "default": true,
+            "description": "コマンド実行後、カーソルを末尾に移動して、選択を解除する"
+          },
+          "add-ruby.convertIllust":{
+            "type":"boolean",
+            "default": true,
+            "description": "『小説家になろう』の挿絵用URLを選択中にコマンドを実行すると、専用形式に変換する\nhttps://23.mitemin.net/i3724/　→　<i3724|23>"
+          },
+          "add-ruby.rubyMode":{
+            "description": "ルビ記号のモード",
+            "type":"string",
+            "default": "half",
+            "enum": ["half", "full", "pixiv", "html"],
+            "enumItemLabels": ["|文字《ルビ》", "｜文字《ルビ》", "[[rb:文字 > ルビ]]", "<ruby>文字<rt>ルビ</rt></ruby>"],
+            "enumDescriptions": ["開始記号が半角", "開始記号が全角", "pixiv用のルビ記号"]
+          }
+        }
+      }
+    ]
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "pretest": "npm run lint",
+    "test": "node ./test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.72.0",
+    "@types/glob": "^8.0.0",
+    "@types/mocha": "^10.0.0",
+    "@types/node": "16.x",
+    "eslint": "^8.24.0",
+    "glob": "^8.0.3",
+    "mocha": "^10.0.0",
+    "typescript": "^4.8.4",
+    "@vscode/test-electron": "^2.1.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/R1dge919/add-ruby"
+  }
+}
