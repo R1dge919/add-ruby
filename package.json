@@ -4,7 +4,7 @@
   "description": "ルビ記号を付与する",
   "icon": "img/icon.png",
   "publisher": "RR1dge",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "engines": {
     "vscode": "^1.72.0"
   },
