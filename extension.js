@@ -22,6 +22,8 @@ function activate(context) {
 
 		let cursor = vscode.workspace.getConfiguration('add-ruby').cursorMovement; // カーソル移動に関する設定を取得
 		let mode = vscode.workspace.getConfiguration('add-ruby').rubyMode; // ルビ記号に関する設定を取得
+		let emphasis = vscode.workspace.getConfiguration('add-ruby').emphasisMode; // ルビ記号に関する設定を取得
+
 		let shift
 
 		switch(mode){
@@ -84,7 +86,7 @@ function activate(context) {
 					let rubied = text.match(rubied_empty)[0]	// rubied_emptyにマッチした文字列を取得
 					let emphasis_Text=""
 					for(let i=0; i<rubied.length; i++){	// 1文字ずつ処理
-						emphasis_Text+=(left + rubied[i] + center + "・" + right);// emphasis_Text に結合（ループで繰り返されることで、文字列の1文字1文字にルビ記号と傍点が付与されるように）
+						emphasis_Text+=(left + rubied[i] + center + emphasis + right);// emphasis_Text に結合（ループで繰り返されることで、文字列の1文字1文字にルビ記号と傍点が付与されるように）
 					}
 					editor.edit(builder => builder.replace(selection, emphasis_Text)) // 選択してた文字列を、newTextに置き換え（カッコを追加）
 					str_length = emphasis_Text.length;
