@@ -1,4 +1,9 @@
-.vscode
-src/web/test
-.eslintrc.json
+backup
+out
+dist
 node_modules
+.vscode-test-web/
+*.vsix
+.vscode
+.eslintrc.json
+src/web/test

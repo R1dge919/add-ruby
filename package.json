@@ -1,8 +1,10 @@
 {
   "name": "add-ruby",
-  "displayName": "add-ruby",
-  "description": "",
-  "version": "0.0.1",
+  "displayName": "Add-Ruby",
+  "description": "ルビ記号を付与する",
+  "icon": "img/icon.png",
+  "publisher": "RR1dge",
+  "version": "2.0.0",
   "engines": {
     "vscode": "^1.74.0"
   },
@@ -10,14 +12,93 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:add-ruby.helloWorld"
+    "onCommand:add-ruby.place"
   ],
+  "main": "./dist/web/extension.js",
   "browser": "./dist/web/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "add-ruby.helloWorld",
-        "title": "Hello World"
+        "command": "add-ruby.place",
+        "title": "ルビ振り",
+        "icon": {
+          "dark": "img/logo_white.svg",
+          "light": "img/logo_black.svg"
+        }
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "add-ruby.place",
+          "group": "navigation"
+        }
+      ],
+      "editor/context": [
+        {
+          "when": "editorHasSelection",
+          "command": "add-ruby.place",
+          "group": "navigation"
+        }
+      ]
+    },
+    "configuration": [
+      {
+        "title": "ルビ振り",
+        "properties": {
+          "add-ruby.cursorMovement": {
+            "type": "boolean",
+            "default": true,
+            "description": "コマンド実行後、カーソルを末尾に移動して、選択を解除する"
+          },
+          "add-ruby.convertIllust": {
+            "type": "boolean",
+            "default": true,
+            "description": "『小説家になろう』の挿絵用URLを選択中にコマンドを実行すると、専用形式に変換する\nhttps://23.mitemin.net/i3724/　→　<i3724|23>"
+          },
+          "add-ruby.rubyMode": {
+            "description": "ルビ記号のモード",
+            "type": "string",
+            "default": "half",
+            "enum": [
+              "half",
+              "full",
+              "pixiv",
+              "html"
+            ],
+            "enumItemLabels": [
+              "|文字《ルビ》",
+              "｜文字《ルビ》",
+              "[[rb:文字 > ルビ]]",
+              "<ruby>文字<rt>ルビ</rt></ruby>"
+            ],
+            "enumDescriptions": [
+              "開始記号が半角",
+              "開始記号が全角",
+              "pixiv用のルビ記号"
+            ]
+          },
+          "add-ruby.emphasisMode": {
+            "description": "傍点モード",
+            "type": "string",
+            "default": "・",
+            "enum": [
+              "・",
+              "﹅",
+              "•"
+            ],
+            "enumItemLabels": [
+              "・（U+30FB）",
+              "﹅（U+FE45）",
+              "•（U+2022）"
+            ],
+            "enumDescriptions": [
+              "中点[・] (KATAKANA MIDDLE DOT)\n　キーボード上から入力できる中点。\n　『小説家になろう』の入力補助機能はコレを用いている。",
+              "ゴマ[﹅] (SESAME DOT)\n　W3C『日本語組版処理の要件（日本語版）』によると、一般に縦組で使用されている。",
+              "ビュレット[•] (BULLET)\n　W3C『日本語組版処理の要件（日本語版）』によると、一般に横組で使用されている。"
+            ]
+          }
+        }
       }
     ]
   },
@@ -46,5 +127,9 @@
     "@types/webpack-env": "^1.18.0",
     "assert": "^2.0.0",
     "process": "^0.11.10"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/R1dge919/add-ruby"
   }
 }
